@@ -1,4 +1,4 @@
-CREATE TYPE "role_enum" AS ENUM ('CUSTOMER', 'ADMIN', 'PROVIDER', 'OWNER');
+CREATE TYPE roleEnum AS ENUM ('CUSTOMER', 'ADMIN', 'PROVIDER', 'OWNER');
 
 CREATE TABLE IF NOT EXISTS "credentials" (
     "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS "credentials" (
 CREATE TABLE IF NOT EXISTS "users" (
     "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "fullname" varchar(25) NOT NULL,
-    "role" role_enum NOT NULL,
+    "role" roleEnum NOT NULL,
     "phone" integer NOT NULL
 );
 

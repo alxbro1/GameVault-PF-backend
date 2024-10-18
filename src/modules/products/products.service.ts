@@ -1,26 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductsRepository } from './products.repository';
+import { InsertProduct } from '../../../db/schemas/schema';
 
 @Injectable()
 export class ProductsService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(private readonly productsRepository: ProductsRepository) {}
+
+  async create(body: InsertProduct) {
+    return await this.productsRepository.createProduct(body);
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll({ page, limit }: { page: number; limit: number }) {
+    return await this.productsRepository.findAllProducts({ page, limit });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    return await this.productsRepository.findOneById(id);
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, productData: Partial<InsertProduct>) {
+    return await this.productsRepository.updateProduct(id, productData);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    return await this.productsRepository.removeProduct(id);
+  }
+
+  async findByCategory({
+    category,
+    page,
+    limit,
+  }: {
+    category: string;
+    page: number;
+    limit: number;
+  }) {
+    return await this.productsRepository.findProductsByCategory({
+      category,
+      page,
+      limit,
+    });
   }
 }

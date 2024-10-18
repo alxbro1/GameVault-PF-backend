@@ -1,12 +1,13 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
-import { drizzleAsyncProvider } from '../../../db/drizzle.provider';
-import { AppModule } from '../../app.module';
+import { UsersRepository } from './users.repository';
+
 
 @Module({
-  imports: [forwardRef(() => AppModule)],
+  imports: [],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, UsersRepository],
+  exports: [UsersService],
 })
 export class UsersModule {}
